@@ -18,6 +18,7 @@ const path = require("path");
 
 //const Mongo_Url = 'mongodb://127.0.0.1:27017/wanderlust';
 const dbUrl = process.env.ATLASDB_URL;
+
 main()
   .then(() => {
     console.log("connected to DB");

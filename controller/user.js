@@ -30,7 +30,6 @@ module.exports.login = async (req, res) => {
 };
 
 module.exports.logout = (req, res, next) => {
-  console.log(req.user);
   req.logout((err) => {
     if (err) {
       return next(err);

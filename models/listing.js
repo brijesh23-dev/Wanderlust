@@ -3,42 +3,55 @@ const Schema = mongoose.Schema;
 const Review = require("./review");
 const User = require("./user");
 
-const listingSchema = new Schema({
-  title: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-  },
-  image: {
-    url: String,
-    filename: String,
-  },
-  price: {
-    type: Number,
-  },
-  location: {
-    type: String,
-  },
-  country: {
-    type: String,
-  },
-  category: {
-    type: String,
-    enum: ["rooms", "mountains", "beach", "arctic", "city"],
-  },
-  reviews: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Review",
+const listingSchema = new Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+      trim: true,
     },
-  ],
-  owner: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
+    description: {
+      type: String,
+      trim: true,
+    },
+    image: {
+      url: String,
+      filename: String,
+    },
+    price: {
+      type: Number,
+    },
+    location: {
+      type: String,
+      trim: true,
+      lowercase: true,
+    },
+    country: {
+      type: String,
+      trim: true,
+      lowercase: true,
+    },
+    category: {
+      type: String,
+      enum: ["rooms", "mountains", "beach", "arctic", "city"],
+      lowercase: true,
+      trim: true,
+    },
+    reviews: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Review",
+      },
+    ],
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
-});
+  {
+    collation: { locale: "en", strength: 2 },
+  },
+);
 
 listingSchema.post("findOneAndDelete", async (listing) => {
   if (listing) {

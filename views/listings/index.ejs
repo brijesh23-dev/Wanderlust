@@ -1,4 +1,17 @@
 <% layout('layouts/boilerplate') %>
+<%
+  const listingUrl = (page, overrides = {}) => {
+    const params = new URLSearchParams({
+      search: search || "",
+      category: category || "",
+      sort: sort || "",
+      page: String(page),
+      ...overrides
+    });
+
+    return `/listings?${params.toString()}`;
+  };
+%>
     <style>
         #filters {
             display: flex;
@@ -26,39 +39,66 @@
     <body>
         <div id="filters">
             <div class="filter f1">
-                <div><i class="fa-solid fa-fire"></i></div>
-                <a href="/listings">All</a>
+                <a href="<%= listingUrl(1, {category: ''}) %>">
+                    <div><i class="fa-solid fa-fire"></i></div>
+                    <span>All</span>
+                    </a>
             </div>
             <div class="filter f2">
-                <div><i class="fa-solid fa-bed"></i></div>
-                <a href="/listings?category=rooms">Rooms</a>
+                <a href="<%= listingUrl(1, {category: 'rooms'}) %>">
+                    <div><i class="fa-solid fa-bed"></i></div>
+                    <span>Rooms</span>
+                </a>
             </div>
             <div class="filter f3">
-                <div><i class="fa-solid fa-mountain-city"></i></div>
-                <a href="/listings?category=city">City</a>
+                <a href="<%= listingUrl(1, {category: 'city'}) %>">
+                    <div><i class="fa-solid fa-mountain-city"></i></div>
+                    <span>City</span>
+                </a>
             </div>
             <div class="filter f4">
-                <div><i class="fa-solid fa-mountain"></i></div>
-                <a href="/listings?category=mountains">Mountains</a>
+                <a href="<%= listingUrl(1, {category: 'mountains'}) %>">
+                    <div><i class="fa-solid fa-mountain"></i></div>
+                    <span>Mountains</span>
+                </a>
             </div>
             <div class="filter f6">
-                <div><i class="fa-solid fa-water-ladder"></i></div>
-                <a href="/listings?category=beach">Beach</a>
+                <a href="<%= listingUrl(1, {category: 'beach'}) %>">
+                    <div><i class="fa-solid fa-water-ladder"></i></div>
+                    <span>Beach</span>
+                </a>
             </div>
             <div class="filter f9">
-                <div><i class="fa-solid fa-snowflake"></i></div>
-                <a href="/listings?category=arctic">Arctic</a>
+                <a href="<%= listingUrl(1, {category: 'arctic'}) %>">
+                    <div><i class="fa-solid fa-snowflake"></i></div>
+                    <span>Artic</span>
+                </a>
             </div>
             <div class="mt-4">
-            <form method="GET" action="/listings" >
-            <select name="sort" onchange="this.form.submit()" class="form-select">
-                  <option value="">Sort By</option>
-                  <option value="priceLow">Price: Low to High</option>
-                  <option value="priceHigh">Price: High to Low</option>
-                  <option value="country">Country A-Z</option>
-                  <option value="location">Location A-Z</option>
-             </select>
-          </form>
+     <form method="GET" action="/listings">
+  <input type="hidden" name="search" value="<%= search || '' %>">
+  <input type="hidden" name="category" value="<%= category || '' %>">
+
+  <select name="sort" onchange="this.form.submit()" class="form-select">
+    <option value="">Sort By</option>
+
+    <option value="priceLow" <%= sort === 'priceLow' ? 'selected' : '' %>>
+      Price: Low to High
+    </option>
+
+    <option value="priceHigh" <%= sort === 'priceHigh' ? 'selected' : '' %>>
+      Price: High to Low
+    </option>
+
+    <option value="country" <%= sort === 'country' ? 'selected' : '' %>>
+      Country A-Z
+    </option>
+
+    <option value="location" <%= sort === 'location' ? 'selected' : '' %>>
+      Location A-Z
+    </option>
+  </select>
+</form>
             </div>
             <div class="toggle-tax border border-1 border-black  rounded-4 ">
                 <div class="form-check form-switch form-check-reverse">
@@ -67,13 +107,14 @@
                 </div>
             </div>
         </div>
-        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+        <!-- listing container -->
+        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3 position-relative">
             <% for(let listing of allListings){ %>
                 <a href="/listings/<%= listing._id %>" class="listing-link">
+                    <!-- listing card-->
                     <div class="listing-card col">
-                        <img src="<%=listing.image.url %>" class="card-img-top" alt="listing_images"
+                        <img src="<%=listing.image.url.replace('/upload','/upload/w_600,h_400,c_fill,q_auto,f_auto/') %>" loading="lazy" decoding="async" class="card-img-top" alt="<%= listing.title %>"
                             style="height: 20rem;">
-                        <!-- <div class="card-img-overlay">abcd</div> -->
                         <div class="card-body">
                             <p class="card-text"><b>
                                     <%= listing.title %>
@@ -84,9 +125,38 @@
                         </div>
                     </div>
                 </a>
-                <!-- <p><%= listing.image.url %></p> -->
                 <%}%>
+
         </div>
+                        <div >
+                    <% if (totalPages > 1) { %>
+  <div class="d-flex justify-content-center mt-4 ">
+
+    <% if (currentPage > 1) { %>
+      <a href="/listings?page=<%= currentPage - 1 %>"
+         class="btn btn-outline-dark">
+        Previous
+      </a>
+    <% } %>
+
+    <% for (let i = 1; i <= totalPages; i++) { %>
+      <a href="/listings?page=<%= i %>"
+         class="btn <%= currentPage === i ? 'btn-dark' : 'btn-outline-dark' %> mx-1">
+        <%= i %>
+      </a>
+    <% } %>
+
+    <% if (currentPage < totalPages) { %>
+      <a href="/listings?page=<%= currentPage + 1 %>"
+         class="btn btn-outline-dark">
+        Next
+      </a>
+    <% } %>
+
+  </div>
+<% } %>
+    </div>
+
     </body>
 
     <script>

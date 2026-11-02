@@ -1,103 +1,289 @@
 
-body{
-      font-family: "Plus Jakarta Sans", sans-serif !important;
-      display: flex;
-      flex-direction: column;
-        min-height: 100vh;
-}
-li{
-    list-style: none;
-}
-.navbar{
-    height: 5rem;
-    background-color: white;
-}
-.fa-compass{
-    color: #fe424d;
-    font-size: 2rem;
-}
-.nav-link{
-    color: #222222 !important; 
+
+/* ========================================
+   1. ROOT VARIABLES / DESIGN TOKENS
+======================================== */
+
+:root {
+
+    /* ---------- COLORS ---------- */
+
+    --primary-color: #fe424d;
+    --primary-hover: #e83b46;
+
+    --text-color: #222222;
+    --text-secondary: #686868;
+    --text-muted: #999999;
+
+    --background-color: #ffffff;
+    --surface-color: #f8f8f8;
+    --footer-bg: #ebebeb;
+
+    --border-color: #dddddd;
+    --border-light: #eeeeee;
+
+    --success-color: #198754;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+
+
+    /* ---------- SPACING ---------- */
+
+    --space-1: 0.25rem;  /* 4px */
+    --space-2: 0.5rem;   /* 8px */
+    --space-3: 0.75rem;  /* 12px */
+    --space-4: 1rem;     /* 16px */
+    --space-5: 1.25rem;  /* 20px */
+    --space-6: 1.5rem;   /* 24px */
+    --space-8: 2rem;     /* 32px */
+    --space-10: 2.5rem; /* 40px */
+    --space-12: 3rem;   /* 48px */
+    --space-16: 4rem;   /* 64px */
+
+
+    /* ---------- BORDER RADIUS ---------- */
+
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    --radius-2xl: 1.5rem;
+    --radius-full: 9999px;
+
+
+    /* ---------- BORDERS ---------- */
+
+    --border-width: 1px;
+    --border-style: solid;
+    --border: var(--border-width) var(--border-style) var(--border-color);
+
+
+    /* ---------- SHADOWS ---------- */
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 8px 20px rgba(0, 0, 0, 0.12);
+
+
+    /* ---------- TYPOGRAPHY ---------- */
+
+    --font-family: "Plus Jakarta Sans", sans-serif;
+
+    --font-xs: 0.75rem;
+    --font-sm: 0.875rem;
+    --font-base: 1rem;
+    --font-lg: 1.125rem;
+    --font-xl: 1.25rem;
+    --font-2xl: 1.5rem;
+    --font-3xl: 1.875rem;
+
+
+    /* ---------- TRANSITIONS ---------- */
+
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+
+
+    /* ---------- LAYOUT ---------- */
+
+    --navbar-height: 5rem;
+    --container-width: 1200px;
+    --card-image-height: 250px;
+
 }
 
-/* footer */
-.f-info{
+
+
+/* ========================================
+   2. GLOBAL STYLES
+======================================== */
+
+body {
+    font-family: "Plus Jakarta Sans", sans-serif !important;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    color: var(--text-color);
+    background-color: var(--background-color);
+}
+
+li {
+    list-style: none;
+}
+
+.container {
+    flex: 1;
+}
+
+
+/* ========================================
+   3. NAVBAR
+======================================== */
+
+.navbar {
+    height: 5rem;
+    background-color: var(--background-color);
+}
+
+.fa-compass {
+    color: var(--primary-color);
+    font-size: 2rem;
+}
+
+.nav-link {
+    color: var(--text-color) !important;
+}
+
+.navbar-collapse {
+    background-color: var(--background-color);
+    transition: all 0.1s ease-in;
+}
+
+.navbar-collapse a {
+    margin-left: 1rem;
+}
+
+
+/* ========================================
+   4. SEARCH BAR
+======================================== */
+
+.search-inp {
+    border-radius: 25px;
+    padding: 0.5rem 1rem;
+}
+
+.btn-search {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    border-radius: 25px;
+    padding: 0 1rem;
+}
+
+.btn-search i {
+    display: inline;
+    margin-right: 0.5rem;
+}
+
+.btn-search:hover {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+}
+
+
+/* ========================================
+   5. FOOTER
+======================================== */
+
+.f-info {
     text-align: center;
-    height:8rem;
-    background-color: #ebebeb;
+    height: 8rem;
+    background-color: var(--footer-bg);
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
-.f-info-socials i{
+
+.f-info-socials i {
     margin-right: 1rem;
     font-size: 1.2rem;
 }
-.f-info-links,.f-info-socials,.f-info-brand{
+
+.f-info-links,
+.f-info-socials,
+.f-info-brand {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.f-info a{
+
+.f-info a {
     text-decoration: none;
-    color: #222222;
+    color: var(--text-color);
 }
-.f-info a:hover{
+
+.f-info a:hover {
     text-decoration: underline;
 }
-/* cards */
-.listing-card{
+
+
+/* ========================================
+   6. LISTING CARDS
+======================================== */
+
+.listing-card {
     border: none !important;
     margin-bottom: 2rem;
 }
-.card-img-top{
+
+.card-img-top {
     width: 100% !important;
     object-fit: cover !important;
     border-radius: 1rem !important;
 }
-.card-body{
-    padding: 0px !important;
+
+.card-body {
+    padding: 0 !important;
 }
-.card-text p{
+
+.card-text p {
     font-weight: 400 !important;
 }
-.listing-link{
+
+.listing-link {
     text-decoration: none !important;
-    color: black !important;
-}
-/* .card-img-overlay{
-    opacity: 0 !important;
-}  */
-/* .card-img-overlay:hover{
-    opacity: 0.6 !important;
-    background-color: rgb(235, 0, 0);
-}  */
-
-/* container */
-.container{
-    flex: 1;
+    color: var(--text-color) !important;
 }
 
-/* new */
-.add-btn,.edit-btn{
-    background-color: #fe424d !important;
-    border: none !important;
-}
 
-.show-img{
+/* ========================================
+   7. LISTING DETAILS PAGE
+======================================== */
+
+.show-img {
     height: 30vh !important;
 }
 
-.btns{
-    display: flex;
-}
-.show-card{
+.show-card {
     padding-left: 0;
     padding-right: 0;
 }
 
-.toggle-tax{
+.btns {
+    display: flex;
+}
+
+
+/* ========================================
+   8. BUTTONS
+======================================== */
+
+.add-btn,
+.edit-btn {
+    background-color: var(--primary-color) !important;
+    border: none !important;
+}
+
+
+/* ========================================
+   9. IMAGE UPLOAD
+======================================== */
+
+#upload_img img {
+    height: 22vh;
+    width: 15vw;
+    object-fit: cover;
+    border-radius: 0.5rem;
+}
+
+
+/* ========================================
+   10. TAX TOGGLE
+======================================== */
+
+.toggle-tax {
     cursor: pointer;
     margin-top: 2rem;
     margin-left: auto;
@@ -108,48 +294,20 @@ li{
     height: 3rem;
 }
 
-#upload_img img{
-    height: 22vh;
-    width: 15vw;
-    object-fit:cover;
-    border-radius: 0.5rem;
-}
-
-.Tax-info{
+.Tax-info {
     display: none;
 }
 
-@media ((max-width: 778px )){ 
-    .f5,.f6,.f7,.f8{
+
+/* ========================================
+   11. RESPONSIVE STYLES
+======================================== */
+
+@media (max-width: 778px) {
+    .f5,
+    .f6,
+    .f7,
+    .f8 {
         display: none !important;
     }
-}
-
-.navbar-collapse{
-    background-color: rgb(255, 255, 255);
-    transition: all 0.1 ease-in;
-}
-.navbar-collapse a{
-    margin-left: 1rem;
-}
-
-.btn-search{
-    background-color: #FE424D;
-    color: white;
-    border-radius: 25px;
-    padding: 0 1rem 0 1rem;
-}
-.btn-search i{
-    display: inline;
-    margin-right: 0.5rem;
-}
-
-.btn-search:hover{
-    background-color: #FE424D;
-    color: white;
-}
-
-.search-inp{
-    border-radius: 25px;
-    padding: 0.5rem 1rem;
 }

@@ -3,11 +3,13 @@ const ExpressError = require("../utils/ExpressError");
 
 module.exports.index = async (req, res) => {
   const { category, sort, search } = req.query;
+  const page = Number(req.query.page);
+  const limit = 8;
+  const skip = (page - 1) * limit;
   let filter = {};
   let sortOption = {};
 
   //search
-
   if (search?.trim()) {
     const keyword = search.trim();
     filter.$or = [
@@ -15,6 +17,7 @@ module.exports.index = async (req, res) => {
       { location: { $regex: keyword, $options: "i" } },
     ];
   }
+
   if (category) {
     filter.category = category;
   }
@@ -35,12 +38,23 @@ module.exports.index = async (req, res) => {
     sortOption.location = 1;
   }
 
-   const allListings = await Listing.find(filter).sort(sortOption);
+  const totalListings = await Listing.countDocuments(filter);
+  const totalPages = Math.ceil(totalListings / limit);
 
-  res.render("listings/index.ejs", { allListings,search:search || "",
-    category:category || "",
-    sort:sort || "",
-   });
+  const allListings = await Listing.find(filter)
+    .sort(sortOption)
+    .skip(skip)
+    .limit(limit)
+    .lean();
+
+  res.render("listings/index.ejs", {
+    allListings,
+    search: search || "",
+    category: category || "",
+    sort: sort || "",
+    currentPage: page,
+    totalPages,
+  });
 };
 
 module.exports.newFormrender = (req, res) => {

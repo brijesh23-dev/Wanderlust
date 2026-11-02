@@ -7,7 +7,7 @@
             </h3>
         </div>
         <div class="listing-card col-6 offset-3 show-card">
-            <img src="<%=listing.image.url %>" class="card-img-top show-img" alt="listing_image">
+            <img src="<%=listing.image.url.replace('/upload','/upload/w_1200,h_800,c_limit,q_auto:good,f_auto/') %>" loading="eager" fetchpriority="high" decoding="async" class="card-img-top show-img" alt="<%=listing.title %>">
             <div class="card-body">
                 <p class="card-text"><i>owned by @<b><%=listing.owner.username %></b></i></p>
                 <p class="card-text"><%=listing.description %></p>

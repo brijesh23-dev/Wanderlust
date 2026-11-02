@@ -1,10 +1,15 @@
 <% layout('layouts/boilerplate') %>
-<div class="row mt-3">
-  <h1 class="col-6 offset-3">Login</h1>
-  <div class="col-6 offset-3">
-    <form action="/login" method="POST" class="needs-validation" novalidate>
+<main class="auth-page">
+  <div class="auth-card">
+    <div class="auth-heading">
+      <span class="auth-icon" aria-hidden="true"><i class="fa-regular fa-compass"></i></span>
+      <p class="auth-eyebrow">Welcome back</p>
+      <h1>Log in to Wanderlust</h1>
+      <p class="auth-subtitle">Continue exploring places worth remembering.</p>
+    </div>
+    <form action="/login" method="POST" class="needs-validation auth-form" novalidate>
       <div class="mb-3">
-        <label for="username" class="form-label">username</label>
+        <label for="username" class="form-label">Username</label>
         <input
           type="username"
           name="username"
@@ -14,7 +19,7 @@
         />
       </div>
       <div class="mb-3">
-        <label for="password" class="form-label">password</label>
+        <label for="password" class="form-label">Password</label>
         <input
           type="password"
           name="password"
@@ -23,7 +28,8 @@
           required
         />
       </div>
-      <button class="btn btn-success btn-sm mb-2">login</button>
+      <button class="btn auth-submit mb-2">Log in</button>
     </form>
+    <p class="auth-switch">New to Wanderlust? <a href="/signup">Create an account</a></p>
   </div>
-</div>
+</main>

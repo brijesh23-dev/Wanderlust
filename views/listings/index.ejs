@@ -12,165 +12,154 @@
     return `/listings?${params.toString()}`;
   };
 %>
-    <style>
-        #filters {
-            display: flex;
-            flex-wrap: wrap;
-        }
+<style>
+  #filters {
+    display: flex;
+    flex-wrap: wrap;
+  }
 
-        .filter {
-            text-align: center;
-            margin-top: 2rem;
-            margin-right: 2.5rem;
-            opacity: 0.7;
-        }
+  .filter {
+    text-align: center;
+    margin-top: 2rem;
+    margin-right: 2.5rem;
+    opacity: 0.7;
+  }
 
-        .filter:hover {
-            opacity: 1;
-        }
+  .filter:hover {
+    opacity: 1;
+  }
 
-        .filter a {
-            font-size: 0.8rem;
-            text-decoration: none;
-            color: black;
-        }
-    </style>
+  .filter a {
+    font-size: 0.8rem;
+    text-decoration: none;
+    color: black;
+  }
+</style>
 
-    <body>
-        <div id="filters">
-            <div class="filter f1">
-                <a href="<%= listingUrl(1, {category: ''}) %>">
-                    <div><i class="fa-solid fa-fire"></i></div>
-                    <span>All</span>
-                    </a>
-            </div>
-            <div class="filter f2">
-                <a href="<%= listingUrl(1, {category: 'rooms'}) %>">
-                    <div><i class="fa-solid fa-bed"></i></div>
-                    <span>Rooms</span>
-                </a>
-            </div>
-            <div class="filter f3">
-                <a href="<%= listingUrl(1, {category: 'city'}) %>">
-                    <div><i class="fa-solid fa-mountain-city"></i></div>
-                    <span>City</span>
-                </a>
-            </div>
-            <div class="filter f4">
-                <a href="<%= listingUrl(1, {category: 'mountains'}) %>">
-                    <div><i class="fa-solid fa-mountain"></i></div>
-                    <span>Mountains</span>
-                </a>
-            </div>
-            <div class="filter f6">
-                <a href="<%= listingUrl(1, {category: 'beach'}) %>">
-                    <div><i class="fa-solid fa-water-ladder"></i></div>
-                    <span>Beach</span>
-                </a>
-            </div>
-            <div class="filter f9">
-                <a href="<%= listingUrl(1, {category: 'arctic'}) %>">
-                    <div><i class="fa-solid fa-snowflake"></i></div>
-                    <span>Artic</span>
-                </a>
-            </div>
-            <div class="mt-4">
-     <form method="GET" action="/listings">
-  <input type="hidden" name="search" value="<%= search || '' %>">
-  <input type="hidden" name="category" value="<%= category || '' %>">
+<body>
+  <div id="filters">
+    <div class="filter f1 <%= !category ? 'active' : '' %>">
+      <a href="<%= listingUrl(1, {category: ''}) %>">
+        <div><i class="fa-solid fa-fire"></i></div>
+        <span>All</span>
+      </a>
+    </div>
+    <div class="filter f2 <%= category === 'rooms' ? 'active' : '' %>">
+      <a href="<%= listingUrl(1, {category: 'rooms'}) %>">
+        <div><i class="fa-solid fa-bed"></i></div>
+        <span>Rooms</span>
+      </a>
+    </div>
+    <div class="filter f3 <%= category === 'city' ? 'active' : '' %>">
+      <a href="<%= listingUrl(1, {category: 'city'}) %>">
+        <div><i class="fa-solid fa-mountain-city"></i></div>
+        <span>City</span>
+      </a>
+    </div>
+    <div class="filter f4 <%= category === 'mountains' ? 'active' : '' %>">
+      <a href="<%= listingUrl(1, {category: 'mountains'}) %>">
+        <div><i class="fa-solid fa-mountain"></i></div>
+        <span>Mountains</span>
+      </a>
+    </div>
+    <div class="filter f6 <%= category === 'beach' ? 'active' : '' %>">
+      <a href="<%= listingUrl(1, {category: 'beach'}) %>">
+        <div><i class="fa-solid fa-water-ladder"></i></div>
+        <span>Beach</span>
+      </a>
+    </div>
+    <div class="filter f9 <%= category === 'arctic' ? 'active' : '' %>">
+      <a href="<%= listingUrl(1, {category: 'arctic'}) %>">
+        <div><i class="fa-solid fa-snowflake"></i></div>
+        <span>Arctic</span>
+      </a>
+    </div>
+    <div class="mt-4">
+      <form method="GET" action="/listings">
+        <input type="hidden" name="search" value="<%= search || '' %>">
+        <input type="hidden" name="category" value="<%= category || '' %>">
+        <select name="sort" onchange="this.form.submit()" class="form-select">
+          <option value="">Sort By</option>
+          <option value="priceLow" <%= sort === 'priceLow' ? 'selected' : '' %>>Price: Low to High</option>
+          <option value="priceHigh" <%= sort === 'priceHigh' ? 'selected' : '' %>>Price: High to Low</option>
+          <option value="country" <%= sort === 'country' ? 'selected' : '' %>>Country A-Z</option>
+          <option value="location" <%= sort === 'location' ? 'selected' : '' %>>Location A-Z</option>
+        </select>
+      </form>
+    </div>
+  </div>
 
-  <select name="sort" onchange="this.form.submit()" class="form-select">
-    <option value="">Sort By</option>
+  <!-- listing container -->
 
-    <option value="priceLow" <%= sort === 'priceLow' ? 'selected' : '' %>>
-      Price: Low to High
-    </option>
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 mt-3">
 
-    <option value="priceHigh" <%= sort === 'priceHigh' ? 'selected' : '' %>>
-      Price: High to Low
-    </option>
+    <% for (let listing of allListings) { %>
 
-    <option value="country" <%= sort === 'country' ? 'selected' : '' %>>
-      Country A-Z
-    </option>
+    <div class="col mb-4">
+      <a href="/listings/<%= listing._id %>" class="listing-link">
 
-    <option value="location" <%= sort === 'location' ? 'selected' : '' %>>
-      Location A-Z
-    </option>
-  </select>
-</form>
-            </div>
-            <div class="toggle-tax border border-1 border-black  rounded-4 ">
-                <div class="form-check form-switch form-check-reverse">
-                    <input class="form-check-input" type="checkbox" role="switch" id="switchCheckReverse">
-                    <label class="form-check-label" for="switchCheckReverse">Display total after tax</label>
-                </div>
-            </div>
+        <div class="listing-card">
+
+          <!-- Property Image -->
+          <div class="card-img-container">
+
+            <img src="<%= listing.image.url.replace('/upload','/upload/w_600,h_400,c_fill,q_auto:good,f_auto/') %>" class="card-img-top" alt="<%= listing.title %>" loading="lazy" decoding="async">
+
+            <!-- Wishlist -->
+            <button class="wishlist-btn" type="button" aria-label="Add to wishlist" onclick="event.preventDefault(); event.stopPropagation();">
+              <i class="fa-regular fa-heart"></i>
+            </button>
+
+          </div>
+
+          <!-- Property Information -->
+          <div class="card-body">
+
+            <h5 class="listing-title">
+              <%= listing.title %>
+            </h5>
+
+            <p class="listing-location">
+              <i class="fa-solid fa-location-dot"></i>
+              <%= listing.location %>, <%= listing.country %>
+            </p>
+
+            <p class="listing-price">
+              <strong>
+                ₹<%= listing.price.toLocaleString("en-IN") %>
+              </strong>
+              <span>/ night</span>
+            </p>
+
+          </div>
+
         </div>
-        <!-- listing container -->
-        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3 position-relative">
-            <% for(let listing of allListings){ %>
-                <a href="/listings/<%= listing._id %>" class="listing-link">
-                    <!-- listing card-->
-                    <div class="listing-card col">
-                        <img src="<%=listing.image.url.replace('/upload','/upload/w_600,h_400,c_fill,q_auto,f_auto/') %>" loading="lazy" decoding="async" class="card-img-top" alt="<%= listing.title %>"
-                            style="height: 20rem;">
-                        <div class="card-body">
-                            <p class="card-text"><b>
-                                    <%= listing.title %>
-                                </b><br>
-                                &#8377;<%=listing.price.toLocaleString("en-NI") %>/night
-                                    &nbsp;&nbsp;&nbsp;<i class="Tax-info">+18% GST</i>
-                            </p>
-                        </div>
-                    </div>
-                </a>
-                <%}%>
 
-        </div>
-                        <div >
-                    <% if (totalPages > 1) { %>
-  <div class="d-flex justify-content-center mt-4 ">
-
-    <% if (currentPage > 1) { %>
-      <a href="/listings?page=<%= currentPage - 1 %>"
-         class="btn btn-outline-dark">
-        Previous
       </a>
-    <% } %>
+    </div>
 
-    <% for (let i = 1; i <= totalPages; i++) { %>
-      <a href="/listings?page=<%= i %>"
-         class="btn <%= currentPage === i ? 'btn-dark' : 'btn-outline-dark' %> mx-1">
-        <%= i %>
-      </a>
-    <% } %>
-
-    <% if (currentPage < totalPages) { %>
-      <a href="/listings?page=<%= currentPage + 1 %>"
-         class="btn btn-outline-dark">
-        Next
-      </a>
     <% } %>
 
   </div>
-<% } %>
-    </div>
-
-    </body>
-
-    <script>
-        let input = document.querySelector("#switchCheckReverse");
-        let taxInfo = document.querySelectorAll('.Tax-info');
-        input.addEventListener("change", (e) => {
-            for (let info of taxInfo) {
-                if (e.target.checked) {
-                    info.style.display = 'initial'
-                } else {
-                    info.style.display = 'none'
-                }
-            }
 
 
-        })
-    </script>
+  <div>
+    <% if (totalPages > 1) { %>
+    <nav class="listing-pagination mt-4 mb-5" aria-label="Listings pagination">
+      <% if (currentPage > 1) { %>
+      <a href="<%= listingUrl(currentPage - 1) %>" class="btn btn-outline-dark pagination-control">Previous</a>
+      <% } %>
+
+      <% for (let i = 1; i <= totalPages; i++) { %>
+      <a href="<%= listingUrl(i) %>" class="btn <%= currentPage === i ? 'btn-dark' : 'btn-outline-dark' %> pagination-number" <%= currentPage === i ? 'aria-current="page"' : '' %>>
+        <%= i %>
+      </a>
+      <% } %>
+
+      <% if (currentPage < totalPages) { %>
+      <a href="<%= listingUrl(currentPage + 1) %>" class="btn btn-outline-dark pagination-control">Next</a>
+      <% } %>
+    </nav>
+    <% } %>
+  </div>
+</body>

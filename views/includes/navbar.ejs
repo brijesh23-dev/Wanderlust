@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top border-bottom bg-white" style="background-color: red;">
+<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top border-bottom bg-white">
   <div class="container-fluid bg-white">
     <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -8,13 +8,13 @@
       <div class="navbar-nav">
         <a class="nav-link" href="/listings">explore</a>
       </div>
-      <div class="navbar-nav ms-auto">
-      <form class="d-flex" role="search" action="/listings" method="get">
+      <div class="navbar-nav navbar-search">
+      <form class="d-flex w-100" role="search" action="/listings" method="get">
       <input class="form-control me-2 search-inp" type="search" name="search" placeholder="Search destination ..." aria-label="Search" value="<%= typeof search!=='undefined'?search:'' %>"/>
       <button class="btn btn-search" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
     </form>
       </div>
-      <div class="navbar-nav ms-auto">
+      <div class="navbar-nav navbar-actions">
         <a class="nav-link" href="/listings/new">Airbnb your home</a>
         <% if (!Curruser) { %>
         <a class="nav-link " aria-current="page" href="/signup"><b>sign up</b></a>

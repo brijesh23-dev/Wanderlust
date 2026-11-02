@@ -1,241 +1,447 @@
-
-
 /* ========================================
    1. ROOT VARIABLES / DESIGN TOKENS
 ======================================== */
 
 :root {
+  /* ---------- COLORS ---------- */
 
-    /* ---------- COLORS ---------- */
+  --primary-color: #fe424d;
+  --primary-hover: #e83b46;
 
-    --primary-color: #fe424d;
-    --primary-hover: #e83b46;
+  --text-color: #222222;
+  --text-secondary: #686868;
+  --text-muted: #999999;
 
-    --text-color: #222222;
-    --text-secondary: #686868;
-    --text-muted: #999999;
+  --background-color: #ffffff;
+  --surface-color: #f8f8f8;
+  --footer-bg: #ebebeb;
 
-    --background-color: #ffffff;
-    --surface-color: #f8f8f8;
-    --footer-bg: #ebebeb;
+  --border-color: #dddddd;
+  --border-light: #eeeeee;
 
-    --border-color: #dddddd;
-    --border-light: #eeeeee;
+  --success-color: #198754;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
 
-    --success-color: #198754;
-    --danger-color: #dc3545;
-    --warning-color: #ffc107;
+  /* ---------- SPACING ---------- */
 
+  --space-1: 0.25rem; /* 4px */
+  --space-2: 0.5rem; /* 8px */
+  --space-3: 0.75rem; /* 12px */
+  --space-4: 1rem; /* 16px */
+  --space-5: 1.25rem; /* 20px */
+  --space-6: 1.5rem; /* 24px */
+  --space-8: 2rem; /* 32px */
+  --space-10: 2.5rem; /* 40px */
+  --space-12: 3rem; /* 48px */
+  --space-16: 4rem; /* 64px */
 
-    /* ---------- SPACING ---------- */
+  /* ---------- BORDER RADIUS ---------- */
 
-    --space-1: 0.25rem;  /* 4px */
-    --space-2: 0.5rem;   /* 8px */
-    --space-3: 0.75rem;  /* 12px */
-    --space-4: 1rem;     /* 16px */
-    --space-5: 1.25rem;  /* 20px */
-    --space-6: 1.5rem;   /* 24px */
-    --space-8: 2rem;     /* 32px */
-    --space-10: 2.5rem; /* 40px */
-    --space-12: 3rem;   /* 48px */
-    --space-16: 4rem;   /* 64px */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
 
+  /* ---------- BORDERS ---------- */
 
-    /* ---------- BORDER RADIUS ---------- */
+  --border-width: 1px;
+  --border-style: solid;
+  --border: var(--border-width) var(--border-style) var(--border-color);
 
-    --radius-sm: 0.25rem;
-    --radius-md: 0.5rem;
-    --radius-lg: 0.75rem;
-    --radius-xl: 1rem;
-    --radius-2xl: 1.5rem;
-    --radius-full: 9999px;
+  /* ---------- SHADOWS ---------- */
 
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 20px rgba(0, 0, 0, 0.12);
 
-    /* ---------- BORDERS ---------- */
+  /* ---------- TYPOGRAPHY ---------- */
 
-    --border-width: 1px;
-    --border-style: solid;
-    --border: var(--border-width) var(--border-style) var(--border-color);
+  --font-family: "Plus Jakarta Sans", sans-serif;
 
+  --font-xs: 0.75rem;
+  --font-sm: 0.875rem;
+  --font-base: 1rem;
+  --font-lg: 1.125rem;
+  --font-xl: 1.25rem;
+  --font-2xl: 1.5rem;
+  --font-3xl: 1.875rem;
 
-    /* ---------- SHADOWS ---------- */
+  /* ---------- TRANSITIONS ---------- */
 
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.08);
-    --shadow-lg: 0 8px 20px rgba(0, 0, 0, 0.12);
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
 
+  /* ---------- LAYOUT ---------- */
 
-    /* ---------- TYPOGRAPHY ---------- */
-
-    --font-family: "Plus Jakarta Sans", sans-serif;
-
-    --font-xs: 0.75rem;
-    --font-sm: 0.875rem;
-    --font-base: 1rem;
-    --font-lg: 1.125rem;
-    --font-xl: 1.25rem;
-    --font-2xl: 1.5rem;
-    --font-3xl: 1.875rem;
-
-
-    /* ---------- TRANSITIONS ---------- */
-
-    --transition-fast: 0.15s ease;
-    --transition-normal: 0.3s ease;
-    --transition-slow: 0.5s ease;
-
-
-    /* ---------- LAYOUT ---------- */
-
-    --navbar-height: 5rem;
-    --container-width: 1200px;
-    --card-image-height: 250px;
-
+  --navbar-height: 4.5rem;
+  --container-width: 1200px;
+  --card-image-height: 250px;
 }
-
-
 
 /* ========================================
    2. GLOBAL STYLES
 ======================================== */
 
 body {
-    font-family: "Plus Jakarta Sans", sans-serif !important;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    color: var(--text-color);
-    background-color: var(--background-color);
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: var(--text-color);
+  background-color: var(--background-color);
 }
 
 li {
-    list-style: none;
+  list-style: none;
 }
 
 .container {
-    flex: 1;
+  flex: 1;
+  width: 100%;
 }
 
+.auth-page {
+  display: flex;
+  justify-content: center;
+  padding: clamp(2rem, 7vw, 5rem) var(--space-4);
+}
+
+.auth-card {
+  width: min(100%, 30rem);
+  padding: clamp(1.5rem, 5vw, 2.75rem);
+  border: var(--border);
+  border-radius: var(--radius-xl);
+  background: var(--background-color);
+  box-shadow: var(--shadow-md);
+}
+
+.auth-heading {
+  text-align: center;
+}
+
+.auth-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: var(--space-4);
+  border-radius: var(--radius-full);
+  background: rgba(254, 66, 77, 0.1);
+  color: var(--primary-color);
+  font-size: 1.4rem;
+}
+
+.auth-eyebrow {
+  margin: 0 0 var(--space-2);
+  color: var(--primary-color);
+  font-size: var(--font-sm);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.auth-heading h1 {
+  margin-bottom: var(--space-2);
+  font-size: clamp(1.6rem, 5vw, 2rem);
+  font-weight: 700;
+}
+
+.auth-subtitle {
+  margin-bottom: var(--space-8);
+  color: var(--text-secondary);
+  font-size: var(--font-sm);
+}
+
+.auth-form .form-label {
+  margin-bottom: var(--space-2);
+  font-size: var(--font-sm);
+  font-weight: 600;
+}
+
+.auth-form .form-control {
+  min-height: 48px;
+  border-color: var(--border-color);
+  border-radius: var(--radius-md);
+}
+
+.auth-form .form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(254, 66, 77, 0.15);
+}
+
+.auth-submit {
+  width: 100%;
+  min-height: 48px;
+  margin-top: var(--space-2);
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--primary-color);
+  color: var(--background-color);
+  font-weight: 700;
+}
+
+.auth-submit:hover,
+.auth-submit:focus-visible {
+  background: var(--primary-hover);
+  color: var(--background-color);
+}
+
+.auth-switch {
+  margin: var(--space-4) 0 0;
+  color: var(--text-secondary);
+  font-size: var(--font-sm);
+  text-align: center;
+}
+
+.auth-switch a {
+  color: var(--text-color);
+  font-weight: 700;
+}
 
 /* ========================================
    3. NAVBAR
 ======================================== */
 
 .navbar {
-    height: 5rem;
-    background-color: var(--background-color);
+  min-height: var(--navbar-height);
+  background-color: var(--background-color);
+}
+
+.navbar .container-fluid {
+  min-height: var(--navbar-height);
+  padding-inline: clamp(1rem, 3vw, 2.5rem);
+}
+
+.navbar-toggler {
+  min-width: 44px;
+  min-height: 44px;
 }
 
 .fa-compass {
-    color: var(--primary-color);
-    font-size: 2rem;
+  color: var(--primary-color);
+  font-size: 2rem;
 }
 
 .nav-link {
-    color: var(--text-color) !important;
+  color: var(--text-color) !important;
 }
 
 .navbar-collapse {
-    background-color: var(--background-color);
-    transition: all 0.1s ease-in;
+  align-items: center;
+  background-color: var(--background-color);
+  transition: all 0.1s ease-in;
+}
+
+.navbar-collapse > .navbar-nav {
+  align-items: center;
+}
+
+.navbar-search {
+  flex: 1 1 28rem;
+  justify-content: center;
+  margin-inline: clamp(1rem, 3vw, 3rem);
+}
+
+.navbar-search form {
+  max-width: 34rem;
+}
+
+.navbar-actions {
+  flex: 0 0 auto;
+  gap: var(--space-1);
 }
 
 .navbar-collapse a {
-    margin-left: 1rem;
+  margin-left: 0;
+  padding-inline: var(--space-3) !important;
 }
 
+.filter.active {
+  opacity: 1;
+  border-bottom: 2px solid var(--text-color);
+}
+
+.filter.active a {
+  color: var(--text-color);
+  font-weight: 600;
+}
 
 /* ========================================
    4. SEARCH BAR
 ======================================== */
 
 .search-inp {
-    border-radius: 25px;
-    padding: 0.5rem 1rem;
+  border-radius: 25px;
+  min-height: 44px;
+  padding: 0.5rem 1rem;
 }
 
 .btn-search {
-    background-color: var(--primary-color);
-    color: var(--background-color);
-    border-radius: 25px;
-    padding: 0 1rem;
+  background-color: var(--primary-color);
+  color: var(--background-color);
+  border-radius: 25px;
+  min-height: 44px;
+  padding: 0 1rem;
 }
 
 .btn-search i {
-    display: inline;
-    margin-right: 0.5rem;
+  display: inline;
+  margin-right: 0.5rem;
 }
 
 .btn-search:hover {
-    background-color: var(--primary-color);
-    color: var(--background-color);
+  background-color: var(--primary-color);
+  color: var(--background-color);
 }
-
 
 /* ========================================
    5. FOOTER
 ======================================== */
 
 .f-info {
-    text-align: center;
-    height: 8rem;
-    background-color: var(--footer-bg);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+  text-align: center;
+  min-height: 8rem;
+  padding: var(--space-5) var(--space-4);
+  background-color: var(--footer-bg);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .f-info-socials i {
-    margin-right: 1rem;
-    font-size: 1.2rem;
+  margin: 0 var(--space-2);
+  font-size: 1.2rem;
 }
 
 .f-info-links,
 .f-info-socials,
 .f-info-brand {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .f-info a {
-    text-decoration: none;
-    color: var(--text-color);
+  text-decoration: none;
+  color: var(--text-color);
 }
 
 .f-info a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
-
 
 /* ========================================
    6. LISTING CARDS
 ======================================== */
 
 .listing-card {
-    border: none !important;
-    margin-bottom: 2rem;
+  border: none !important;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  margin-bottom: var(--space-4);
+  transition: var(--transition-normal);
+}
+
+.listing-card:hover {
+  transform: translateY(-3px);
 }
 
 .card-img-top {
-    width: 100% !important;
-    object-fit: cover !important;
-    border-radius: 1rem !important;
+    width: 100%;
+    height: var(--card-image-height);
+    object-fit: cover;
+    border-radius: var(--radius-xl);
+    transition: var(--transition-normal);
+}
+
+.listing-card:hover .card-img-top {
+    transform: scale(1.03);
 }
 
 .card-body {
-    padding: 0 !important;
+  padding: 0 !important;
 }
 
 .card-text p {
-    font-weight: 400 !important;
+  font-weight: 400 !important;
 }
 
 .listing-link {
-    text-decoration: none !important;
-    color: var(--text-color) !important;
+  text-decoration: none !important;
+  color: var(--text-color) !important;
 }
+
+/* Card Information */
+
+.card-body {
+    padding: var(--space-2) 0 !important;
+}
+
+.listing-title {
+    font-size: var(--font-base);
+    font-weight: 600;
+    margin: var(--space-2) 0 var(--space-1);
+    color: var(--text-color);
+}
+
+.listing-location {
+    font-size: var(--font-sm);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-2);
+}
+
+.listing-location i {
+    margin-right: var(--space-1);
+}
+
+.listing-price {
+    font-size: var(--font-sm);
+    color: var(--text-color);
+    margin-bottom: 0;
+}
+
+.listing-price strong {
+    font-size: var(--font-base);
+}
+
+.listing-price span {
+    color: var(--text-secondary);
+}
+
+/* Wishlist Button */
+
+.wishlist-btn {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-3);
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--text-color);
+    font-size: 1.1rem;
+    cursor: pointer;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: var(--transition-fast);
+}
+
+.wishlist-btn:hover {
+    background: var(--background-color);
+    transform: scale(1.1);
+}
+
 
 
 /* ========================================
@@ -243,18 +449,17 @@ li {
 ======================================== */
 
 .show-img {
-    height: 30vh !important;
+  height: clamp(14rem, 42vw, 30rem) !important;
 }
 
 .show-card {
-    padding-left: 0;
-    padding-right: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .btns {
-    display: flex;
+  display: flex;
 }
-
 
 /* ========================================
    8. BUTTONS
@@ -262,52 +467,164 @@ li {
 
 .add-btn,
 .edit-btn {
-    background-color: var(--primary-color) !important;
-    border: none !important;
+  background-color: var(--primary-color) !important;
+  border: none !important;
 }
-
 
 /* ========================================
    9. IMAGE UPLOAD
 ======================================== */
 
 #upload_img img {
-    height: 22vh;
-    width: 15vw;
-    object-fit: cover;
-    border-radius: 0.5rem;
+  height: auto;
+  max-height: 11rem;
+  width: min(100%, 15rem);
+  object-fit: cover;
+  border-radius: 0.5rem;
 }
 
+.listing-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.listing-pagination .btn {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.listing-pagination .pagination-control {
+  min-width: 5.5rem;
+}
 
 /* ========================================
-   10. TAX TOGGLE
-======================================== */
-
-.toggle-tax {
-    cursor: pointer;
-    margin-top: 2rem;
-    margin-left: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0.5rem 1rem;
-    height: 3rem;
-}
-
-.Tax-info {
-    display: none;
-}
-
-
-/* ========================================
-   11. RESPONSIVE STYLES
+   10. RESPONSIVE STYLES
 ======================================== */
 
 @media (max-width: 778px) {
-    .f5,
-    .f6,
-    .f7,
-    .f8 {
-        display: none !important;
-    }
+  .f5,
+  .f6,
+  .f7,
+  .f8 {
+    display: none !important;
+  }
+
+  .navbar {
+    height: auto;
+  }
+
+  .navbar-collapse {
+    padding: var(--space-3) 0 var(--space-4);
+  }
+
+  .navbar-collapse > .navbar-nav,
+  .navbar-collapse .navbar-nav {
+    gap: var(--space-2);
+  }
+
+  .navbar-search {
+    flex-basis: auto;
+    margin: var(--space-2) 0;
+  }
+
+  .navbar-actions {
+    align-items: stretch !important;
+  }
+
+  .navbar-collapse a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: var(--space-2) var(--space-3) !important;
+  }
+
+  .navbar-collapse form {
+    display: flex;
+    width: 100%;
+  }
+
+  .navbar-collapse form .search-inp {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .navbar-collapse form .btn-search {
+    flex-shrink: 0;
+  }
+
+  #filters {
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: var(--space-4);
+    margin: 0 calc(var(--bs-gutter-x) * -0.5);
+    padding: var(--space-3) calc(var(--bs-gutter-x) * 0.5) var(--space-2);
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+
+  .filter {
+    flex: 0 0 auto;
+    margin: 0;
+  }
+
+  #filters > .mt-4 {
+    flex: 0 0 9.5rem;
+    margin-top: 0 !important;
+  }
+
+  .listing-card {
+    margin-bottom: var(--space-6);
+  }
+
+  .card-img-top {
+    height: clamp(13rem, 65vw, 20rem);
+  }
+
+  .btns {
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .btns .btn,
+  .btns form {
+    margin-left: 0 !important;
+  }
+
+  .btns .btn {
+    min-width: 6rem;
+  }
+
+  .f-info {
+    gap: var(--space-2);
+  }
+
+  .f-info-links {
+    gap: var(--space-4);
+  }
+
+  .listing-pagination {
+    padding-inline: var(--space-2);
+  }
+
+  .listing-pagination .pagination-control {
+    min-width: 5rem;
+  }
+}
+
+@media (min-width: 779px) {
+  .listing-card .card-img-container {
+    height: var(--card-image-height);
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: var(--container-width);
+  }
 }

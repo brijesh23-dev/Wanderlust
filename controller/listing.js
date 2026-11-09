@@ -128,3 +128,37 @@ module.exports.destroyListing = async (req, res) => {
   req.flash("success", "listing is Deleted!");
   res.redirect("/listings");
 };
+
+module.exports.renderWishlist = async (req, res) => {
+  res.render("listings/wishlist");
+};
+
+module.exports.getWishlist = async (req, res) => {
+  const { listingIds } = req.body;
+
+  // Validate input
+  if (!Array.isArray(listingIds)) {
+    return res.status(400).json({
+      success: false,
+      message: "Invalid listing IDs",
+    });
+  }
+
+  // Handle empty wishlist
+  if (listingIds.length === 0) {
+    return res.json({
+      success: true,
+      listings: [],
+    });
+  }
+
+  // Fetch listings from MongoDB
+  const listings = await Listing.find({
+    _id: { $in: listingIds },
+  });
+
+  res.json({
+    success: true,
+    listings,
+  });
+};

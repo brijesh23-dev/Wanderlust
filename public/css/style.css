@@ -443,6 +443,51 @@ li {
 }
 
 
+.wishlist-icon {
+    width: 22px;
+    height: 22px;
+    transition: transform 0.2s ease;
+}
+
+.wishlist-btn {
+    color: #222;
+}
+
+.wishlist-btn.active {
+    color: #ff385c;
+}
+
+.wishlist-btn.active .wishlist-icon {
+    fill: #ff385c;
+}
+
+.wishlist-btn:hover .wishlist-icon {
+    transform: scale(1.12);
+}
+
+.wishlist-remove-btn {
+    position: absolute;
+    right: var(--space-3);
+    bottom: var(--space-3);
+    border: 0;
+    border-radius: var(--radius-full);
+    padding: 0.4rem 0.75rem;
+    background: var(--danger-color);
+    color: var(--background-color);
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.wishlist-remove-btn:hover {
+    background: var(--primary-hover);
+}
+
+.wishlist-remove-btn:focus-visible {
+    outline: 2px solid var(--text-color);
+    outline-offset: 2px;
+}
+
+
 
 /* ========================================
    7. LISTING DETAILS PAGE

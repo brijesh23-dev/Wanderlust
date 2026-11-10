@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Review = require("./review");
 const User = require("./user");
+const { required } = require("joi");
 
 const listingSchema = new Schema(
   {
@@ -30,6 +31,18 @@ const listingSchema = new Schema(
       type: String,
       trim: true,
       lowercase: true,
+    },
+    geometry: {
+      type: {
+        type: String,
+        enum: ["Point"],
+        // required: true,
+      },
+      coordinates: {
+        type: [Number],
+        default: [0, 0],
+        // required: true,
+      },
     },
     category: {
       type: String,

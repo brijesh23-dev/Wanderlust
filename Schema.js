@@ -7,6 +7,8 @@ module.exports.listingSchema = Joi.object({
     description: Joi.string().required(),
     location: Joi.string().required(),
     country: Joi.string().required(),
+    latitude: Joi.number().min(-90).max(90).required(),
+    longitude: Joi.number().min(-180).max(180).required(),
     image: Joi.string().allow(null, ""), // Allow null or empty string
     category: Joi.string()
       .valid("rooms", "mountains", "beach", "arctic", "city")

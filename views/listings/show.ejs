@@ -15,6 +15,9 @@
                 <p class="card-text"><%=listing.location %></p>
                 <p class="card-text"><%=listing.country %></p>
             </div>
+
+            <!-- map -->
+            <div id="map" data-coordinates="<%=JSON.stringify(listing.geometry.coordinates)%>"></div>
         </div>
      
         <div class="btns">
@@ -77,3 +80,6 @@
            </div>
         </div>
     </div>
+    
+    <script src="/leaflet/leaflet.js"></script>
+    <script src="/js/map.js"></script>

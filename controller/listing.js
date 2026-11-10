@@ -82,9 +82,31 @@ module.exports.createListing = async (req, res) => {
   if (!req.body.listing) {
     throw new ExpressError(400, "send valid data for listing");
   }
+  let { latitude, longitude, ...listingdata } = req.body.listing;
 
-  let newlisting = new Listing(req.body.listing);
+  latitude = Number(latitude);
+  longitude = Number(longitude);
+  if (!Number.isFinite(latitude)) {
+    throw new ExpressError(400, "Latitude must be a valid number");
+  }
+
+  if (!Number.isFinite(longitude)) {
+    throw new ExpressError(400, "Longitude must be a valid number");
+  }
+  if (latitude < -90 || latitude > 90) {
+    throw new ExpressError(400, "Invalid latitude");
+  }
+
+  if (longitude < -180 || longitude > 180) {
+    throw new ExpressError(400, "Invalid longitude");
+  }
+
+  let newlisting = new Listing(listingdata);
   newlisting.owner = req.user._id;
+  newlisting.geometry = {
+    type: "Point",
+    coordinates: [longitude, latitude],
+  };
 
   if (req.file) {
     newlisting.image = {
@@ -110,14 +132,34 @@ module.exports.updateListing = async (req, res) => {
   if (!req.body.listing) {
     throw new ExpressError(400, "send valid data for listing");
   }
+  let { latitude, longitude, ...listingdata } = req.body.listing;
+  latitude = Number(latitude);
+  longitude = Number(longitude);
   const { id } = req.params;
-  let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+
+  if (!Number.isFinite(latitude) || latitude < -90 || latitude > 90) {
+    throw new ExpressError(400, "Invalid latitude");
+  }
+
+  if (!Number.isFinite(longitude) || longitude < -180 || longitude > 180) {
+    throw new ExpressError(400, "Invalid longitude");
+  }
+
+  let listing = await Listing.findById(id);
+  if (!listing) {
+    throw new ExpressError(404, "Listing not found");
+  }
+  Object.assign(listing, listingdata);
+  listing.geometry = {
+    type: "Point",
+    coordinates: [longitude, latitude],
+  };
   if (typeof req.file !== "undefined") {
     let url = req.file.path;
     let filename = req.file.filename;
     listing.image = { url, filename };
-    await listing.save();
   }
+  await listing.save();
   req.flash("success", "listing is updated !");
   res.redirect(`/listings/${id}`);
 };

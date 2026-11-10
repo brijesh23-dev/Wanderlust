@@ -1,32 +1,19 @@
-```ejs
-<% layout('layouts/boilerplate') %>
+ <% layout('layouts/boilerplate') %>
+
 <body>
   <div class="row">
     <div class="col-12 col-md-8 offset-md-2">
       <h3>Edit your listings</h3>
-      <form
-        method="POST"
-        action="/listings/<%= listing._id%>?_method=PUT"
-        enctype="multipart/form-data"
-      >
+      <form method="POST" action="/listings/<%= listing._id%>?_method=PUT" enctype="multipart/form-data">
         <div class="mb-3">
           <label for="title" class="form-label">Title</label>
-          <input
-            type="text"
-            name="listing[title]"
-            id="title"
-            value="<%= listing.title %>"
-            class="form-control"
-          />
+          <input type="text" name="listing[title]" id="title" value="<%= listing.title %>" class="form-control" />
         </div>
 
         <div class="mb-3">
           <label for="description" class="form-label">Description</label>
-          <textarea
-            name="listing[description]"
-            class="form-control"
-            id="description"
-          ><%= listing.description %></textarea>
+          <textarea name="listing[description]" class="form-control" id="description">
+<%= listing.description %></textarea>
         </div>
 
         <div class="mb-3" id="upload_img">
@@ -35,80 +22,39 @@
         </div>
 
         <div class="mb-3">
-          <label for="image-link" class="form-label">
-            Update new image
-          </label>
-          <input
-            type="file"
-            name="listing[image]"
-            class="form-control"
-            id="image-link"
-          />
+          <label for="image-link" class="form-label"> Update new image </label>
+          <input type="file" name="listing[image]" class="form-control" id="image-link" />
         </div>
 
         <div class="mb-3">
           <label for="price" class="form-label">Price</label>
-          <input
-            type="number"
-            name="listing[price]"
-            value="<%= listing.price %>"
-            class="form-control"
-            id="price"
-          />
+          <input type="number" name="listing[price]" value="<%= listing.price %>" class="form-control" id="price" />
         </div>
 
         <div class="mb-3">
           <label for="location" class="form-label">Location</label>
-          <input
-            type="text"
-            name="listing[location]"
-            value="<%= listing.location %>"
-            class="form-control"
-            id="location"
-          />
+          <input type="text" name="listing[location]" value="<%= listing.location %>" class="form-control" id="location" />
         </div>
 
         <div class="mb-3">
           <label for="country" class="form-label">Country</label>
-          <input
-            type="text"
-            name="listing[country]"
-            value="<%= listing.country %>"
-            class="form-control"
-            id="country"
-          />
+          <input type="text" name="listing[country]" value="<%= listing.country %>" class="form-control" id="country" />
         </div>
 
         <div class="mb-3">
           <label for="latitude" class="form-label">Latitude</label>
-          <input
-            type="number"
-            step="any"
-            name="listing[latitude]"
-            value="<%= listing.geometry.coordinates[1] %>"
-            class="form-control"
-            id="latitude"
-            required
-          />
+          <input type="number" name="listing[latitude]" id="latitude" class="form-control" step="any" min="-90" max="90" value="<%= listing.geometry.coordinates[1] %>" required />
         </div>
 
         <div class="mb-3">
           <label for="longitude" class="form-label">Longitude</label>
-          <input
-            type="number"
-            step="any"
-            name="listing[longitude]"
-            value="<%= listing.geometry.coordinates[0] %>"
-            class="form-control"
-            id="longitude"
-            required
-          />
+          <input type="number" name="listing[longitude]" id="longitude" class="form-control" step="any" min="-180" max="180" value="<%= listing.geometry.coordinates[0] %>" required />
         </div>
 
-        <div class="mb-3">
-          <label class="form-label">Select location on map</label>
-          <div id="map"></div>
-        </div>
+        <button type="button" id="current-location" class="btn btn-outline-dark mb-3">
+          <i class="fa-solid fa-location-crosshairs"></i>
+          Use My Current Location
+        </button>
 
         <br />
         <button class="btn btn-dark edit-btn mb-2">Update</button>
@@ -117,6 +63,5 @@
   </div>
 
   <script src="/leaflet/leaflet.js"></script>
-  <script src="/js/map.js"></script>
+  <script type="module" src="/js/editMap.js"></script>
 </body>
-```

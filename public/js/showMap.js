@@ -1,3 +1,5 @@
+//this handle map on listing details page.
+
 const mapElement = document.getElementById("map");
 const [longitude, latitude] = JSON.parse(mapElement.dataset.coordinates);
 const mapCoordinates = [latitude, longitude]; //leaflet format
@@ -18,3 +20,9 @@ const marker = L.marker(mapCoordinates, {
 marker.on("dragend", () => {
   console.log(marker.getLatLng());
 });
+
+map.on("click", (event) => {
+  marker.setLatLng(event.latlng);
+});
+
+

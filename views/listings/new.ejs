@@ -1,69 +1,74 @@
 <% layout('layouts/boilerplate') %>
-<body>
-    <form action="/listings" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
-        <div class="row  " >
-            <div class="col-12 col-md-8 offset-md-2">
-                <br></br>
-                <h3 class="">Create New Listing</h3>
+  <form action="/listings" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+    <div class="row  ">
+      <div class="col-12 col-md-8 offset-md-2">
+        <br></br>
+        <h3 class="">Create New Listing</h3>
         <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-            <input type="text" name="listing[title]" placeholder="Any catch title" class="form-control" required>
-            <div class="valid-feedback">looks good</div>
+          <label for="title" class="form-label">Title</label>
+          <input type="text" name="listing[title]" placeholder="Any catch title" class="form-control" required>
+          <div class="valid-feedback">looks good</div>
         </div>
         <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            <textarea name="listing[description]" placeholder="enter your description" class="form-control" required></textarea>
-            <div class="invalid-feedback">Please enter a short description</div>
+          <label for="description" class="form-label">Description</label>
+          <textarea name="listing[description]" placeholder="enter your description" class="form-control" required></textarea>
+          <div class="invalid-feedback">Please enter a short description</div>
         </div>
         <div class="mb-3">
-            <label for="image" class="form-label">Upload Image</label>
-            <input type="file" name="listing[image]"  class="form-control">
+          <label for="image" class="form-label">Upload Image</label>
+          <input type="file" name="listing[image]" class="form-control">
         </div>
-        <div  class=" row mb-3">
-        <div class="col-md-4 mb-3">
+        <div class=" row mb-3">
+          <div class="col-md-4 mb-3">
             <label for="price" class="form-label">Price</label>
             <input type="number" name="listing[price]" placeholder="1200" class="form-control" required>
-             <div class="invalid-feedback">Please enter Valid Price</div>
-        </div>
-        <div class="col-md-8 mb-3" >
-             <label for="country" class="form-label">Country</label>
+            <div class="invalid-feedback">Please enter Valid Price</div>
+          </div>
+          <div class="col-md-8 mb-3">
+            <label for="country" class="form-label">Country</label>
             <input type="text" name="listing[country]" placeholder="India" class="form-control" required>
             <div class="invalid-feedback">Please enter Valid Country</div>
+          </div>
         </div>
+        <div class=" row mb-3">
+          <div class="col-md-6 mb-3">
+            <label for="latitude" class="form-label">latitude</label>
+            <input type="number" step="any" name="listing[latitude]" id="latitude" min="-90" max="90" class="form-control" placeholder="65.xx...." required/>
+            <div class="invalid-feedback">Please enter latitude</div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="longitude" class="form-label">longitude</label>
+            <input type="number"  name="listing[longitude]" id="longitude" min="-180" max="180" class="form-control" placeholder="165.xx..." required />
+          </div>
         </div>
-        <div  class=" row mb-3">
-        <div class="col-md-6 mb-3">
-            <label for="price" class="form-label">latitude</label>
-            <input type="text" name="listing[latitude]" placeholder="176.xxx...." class="form-control" required>
-             <div class="invalid-feedback">Please enter latitude</div>
-        </div>
-        <div class="col-md-6 mb-3" >
-             <label for="country" class="form-label">longitude</label>
-            <input type="text" name="listing[longitude]" placeholder="210.xxx...." class="form-control" required>
-            <div class="invalid-feedback">Please enter longitude</div>
-        </div>
+        <div class="mb-3">
+          <button type="button" id="current-location" class="btn btn-outline-dark">
+            <i class="fa-solid fa-location-crosshairs"></i>
+            Use My Current Location
+          </button>
         </div>
         <div class="row mb-3 ">
-            <div class=" col-md-6">
+          <div class=" col-md-6">
             <label for="location" class="form-label">Location</label>
             <input type="text" name="listing[location]" placeholder="Gujrat,Delhi" class="form-control" required>
             <div class="invalid-feedback">Please enter Valid location</div>
-        </div>
-        <div class=" col-md-6">
-    <label for="category" class="form-label">Category</label>
-    <select name="listing[category]" id="category" class="form-select">
-        <option value="rooms">Rooms</option>
-        <option value="mountains">Mountains</option>
-        <option value="beach">Beach</option>
-        <option value="arctic">Arctic</option>
-        <option value="city">City</option>
-    </select>
-    
-</div>
+          </div>
+          <div class=" col-md-6">
+            <label for="category" class="form-label">Category</label>
+            <select name="listing[category]" id="category" class="form-select">
+              <option value="rooms">Rooms</option>
+              <option value="mountains">Mountains</option>
+              <option value="beach">Beach</option>
+              <option value="arctic">Arctic</option>
+              <option value="city">City</option>
+            </select>
+
+          </div>
         </div>
         <br>
         <button class="btn btn-dark mb-2 add-btn">Add</button>
+      </div>
     </div>
-</div>
-</form>
-</body>
+  </form>
+    <script src="/leaflet/leaflet.js"></script>
+    <script type="module" src="/js/createMap.js"></script>

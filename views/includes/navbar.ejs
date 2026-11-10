@@ -9,19 +9,22 @@
         <a class="nav-link" href="/listings">explore</a>
       </div>
       <div class="navbar-nav navbar-search">
-      <form class="d-flex w-100" role="search" action="/listings" method="get">
-      <input class="form-control me-2 search-inp" type="search" name="search" placeholder="Search destination ..." aria-label="Search" value="<%= typeof search!=='undefined'?search:'' %>"/>
-      <button class="btn btn-search" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
-    </form>
+        <form class="d-flex w-100" role="search" action="/listings" method="get">
+          <input class="form-control me-2 search-inp" type="search" name="search" placeholder="Search destination ..." aria-label="Search" value="<%= typeof search!=='undefined'?search:'' %>" />
+          <button class="btn btn-search" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
+        </form>
       </div>
       <div class="navbar-nav navbar-actions">
-        <a class="nav-link" href="/listings/new">Airbnb your home</a>
+        <a class="nav-link" href="/listings/new">Add your property</a>
         <% if (!Curruser) { %>
         <a class="nav-link " aria-current="page" href="/signup"><b>sign up</b></a>
         <a class="nav-link" href="/login"><b>login</b></a>
         <% } %>
         <% if (Curruser) { %>
-          <a class="nav-link" href="/logout"><b>logout</b></a>
+        <a class="nav-link" href="/listings/wishlist">
+          <i class="fa-regular fa-heart"></i> Wishlist
+        </a>
+        <a class="nav-link" href="/logout"><b>logout</b></a>
         <% } %>
       </div>
     </div>

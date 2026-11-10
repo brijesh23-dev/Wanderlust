@@ -185,3 +185,71 @@ This project currently uses the ISC license declared in `package.json`.
 **Brijesh**
 
 - GitHub: [@brijesh23-dev](https://github.com/brijesh23-dev)
+
+## Recently Added Features
+
+The following features have been added to the application:
+
+### Listing Search
+
+Use the search field in the navigation bar to search listings by title or location:
+
+```text
+/listings?search=goa
+```
+
+Search is case-insensitive and can be combined with category filters, sorting, and pagination.
+
+### Pagination
+
+Listing results are displayed in pages of eight listings. Use the `page` query parameter to open a specific page:
+
+```text
+/listings?page=2
+```
+
+Pagination keeps the active `search`, `category`, and `sort` values when moving between pages.
+
+### Wishlist
+
+Users can add or remove listings using the heart button on listing cards. Wishlist IDs are stored in the browser's `localStorage`, so they remain available in the same browser without requiring a database record.
+
+The wishlist page is available at:
+
+```text
+/listings/wishlist
+```
+
+The page requests the saved listing records from the server through:
+
+```text
+POST /listings/wishlist/data
+```
+
+The request body must contain a `listingIds` array. An empty array returns an empty wishlist.
+
+### Listing Maps and Coordinates
+
+Listings now store geographic coordinates as a GeoJSON `Point`:
+
+```text
+geometry.coordinates = [longitude, latitude]
+```
+
+The new and edit listing forms can use the browser's current location to populate latitude and longitude fields. Coordinates are validated on the server:
+
+- Latitude must be between `-90` and `90`.
+- Longitude must be between `-180` and `180`.
+
+Leaflet displays the saved location on the listing details page. The Leaflet assets are served through the `/leaflet` path.
+
+### New Listing Query Parameters
+
+The listings page supports the following query parameters:
+
+| Parameter | Supported values | Purpose |
+|---|---|---|
+| `search` | Text | Search listing titles and locations |
+| `category` | `rooms`, `city`, `mountains`, `beach`, `arctic` | Filter listings by category |
+| `sort` | `priceLow`, `priceHigh`, `country`, `location` | Sort listing results |
+| `page` | Positive page number | Select a results page |

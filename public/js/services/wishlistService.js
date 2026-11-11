@@ -33,4 +33,14 @@ async function removeFromWishlist(listindId) {
   return response.json();
 }
 
-export { addToWishlist,removeFromWishlist };
+async function getWishlist() {
+  const response = await fetch("/wishlist", {
+    method: "GET",
+  });
+  if (!response.ok) {
+    throw new Error("failed to fetch wishlist");
+  }
+  return response.json();
+}
+
+export { addToWishlist, removeFromWishlist, getWishlist };

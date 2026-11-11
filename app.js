@@ -8,13 +8,14 @@ const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
 const MongoStore = require("connect-mongo").default;
 const flash = require("connect-flash");
-const listingsRouter = require("./routes/listing.js");
-const reviewsRouter = require("./routes/review.js");
+const listingsRoute = require("./routes/listing.js");
+const reviewsRoute = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 const path = require("path");
+const wishlistRoute = require("./routes/wishlist.js");
 
 //const Mongo_Url = 'mongodb://127.0.0.1:27017/wanderlust';
 const dbUrl = process.env.ATLASDB_URL;
@@ -66,10 +67,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.use(
-  "/leaflet",
-  express.static("node_modules/leaflet/dist")
-);
+app.use("/leaflet", express.static("node_modules/leaflet/dist"));
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
@@ -81,9 +79,10 @@ app.get("/", (req, res) => {
   res.redirect("/listings");
 });
 
-app.use("/listings", listingsRouter);
-app.use("/listings/:id/reviews", reviewsRouter);
+app.use("/listings", listingsRoute);
+app.use("/listings/:id/reviews", reviewsRoute);
 app.use("/", userRouter);
+app.use("/wishlist", wishlistRoute);
 
 app.all("*", (req, res, next) => {
   next(new ExpressError(404, "Page Not Found")); //throw error for undefined routes

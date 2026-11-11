@@ -11,3 +11,26 @@ export default async function wishlistApi(data) {
   }
   return response.json();
 }
+
+async function addToWishlist(listingId) {
+  const response = await fetch(`/wishlist/${listingId}`, {
+    method: "PUT",
+  });
+
+  if (!response.ok) {
+    throw new Error("failed to add wishlist");
+  }
+  return response.json();
+}
+
+async function removeFromWishlist(listindId) {
+  const response = await fetch(`/wishlist/${listindId}`, {
+    method: "DELETE",
+  });
+  if (!response.ok) {
+    throw new Error("failed to remove from wishlist");
+  }
+  return response.json();
+}
+
+export { addToWishlist };

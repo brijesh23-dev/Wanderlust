@@ -1,23 +1,35 @@
 import wishlistApi from "./services/wishlistService.js";
-const WISHLIST_KEY = "wishlist";
-let wishlistResult = JSON.parse(localStorage.getItem(WISHLIST_KEY) || "[]");
+import { addToWishlist } from "./services/wishlistService.js";
+/*==================================
+        local storage wishlist (guest user)
+=============================*/
+
+// const WISHLIST_KEY = "wishlist";
+// let wishlistResult = JSON.parse(localStorage.getItem(WISHLIST_KEY) || "[]");
+
+// const wishlistButtons = document.querySelectorAll(".wishlist-btn");
+// wishlistButtons.forEach((button) => {
+//   updateButton(button);
+
+//   button.addEventListener("click", async (e) => {
+//     const listingId = e.currentTarget.dataset.listingId;
+//     if (wishlistResult.includes(listingId)) {
+//       wishlistResult = wishlistResult.filter(
+//         (wishlist) => wishlist !== listingId,
+//       );
+//     } else {
+//       wishlistResult = [...wishlistResult, listingId];
+//     }
+//     localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlistResult));
+//     updateButton(button);
+//   });
+// });
 
 const wishlistButtons = document.querySelectorAll(".wishlist-btn");
 wishlistButtons.forEach((button) => {
-  updateButton(button);
-
-  button.addEventListener("click", (e) => {
-    const listingId = e.currentTarget.dataset.listingId;
-
-    if (wishlistResult.includes(listingId)) {
-      wishlistResult = wishlistResult.filter(
-        (wishlist) => wishlist !== listingId,
-      );
-    } else {
-      wishlistResult = [...wishlistResult, listingId];
-    }
-    localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlistResult));
-    updateButton(button);
+  button.addEventListener("click", async (e) => {
+    const listindId = e.currentTarget.dataset.listindId;
+    await addToWishlist(listindId);
   });
 });
 
@@ -104,7 +116,10 @@ function createListingCard(listing) {
   removeButton.type = "button";
   removeButton.className = "wishlist-remove-btn";
   removeButton.textContent = "Remove";
-  removeButton.setAttribute("aria-label", `Remove ${listing.title} from wishlist`);
+  removeButton.setAttribute(
+    "aria-label",
+    `Remove ${listing.title} from wishlist`,
+  );
   removeButton.addEventListener("click", (event) => {
     event.preventDefault();
     event.stopPropagation();

@@ -15,15 +15,7 @@ const addToWishlist = async (req, res) => {
     throw new Error(400, "Listing not foudn");
   }
 
-  const wishlist = await Wishlist.findOne({ user: userId });
-  if (wishlist && wishlist.listings.some((id) => id.equals(listindId))) {
-    await Wishlist.updateOne(
-      { user: userId },
-      { $pull: { listings: listindId } },
-    );
-    res.json({ action: "added" }, listindId);
-  }
-  await Wishlist.findOneAndUpdate(
+  const wishlist = await Wishlist.findOneAndUpdate(
     { user: userId },
     { $addToSet: { listings: listindId } },
     { new: true, upsert: true, runValidators: true },
@@ -35,4 +27,29 @@ const addToWishlist = async (req, res) => {
   });
 };
 
-module.exports = { addToWishlist };
+const removeFromWishlist = async (req, res) => {
+  const { listindId } = req.params;
+  const userId = req.user._id;
+  const wishlist = await Wishlist.findOneAndUpdate(
+    { user: userId },
+    { $pull: { listings: listindId } },
+    { new: true },
+  );
+
+  res.status(200).json({
+    success: true,
+    wishlist,
+  });
+};
+
+const getWishlist = async (req, res) => {
+  const userId = req.user._id;
+  const wishlist = await Wishlist.findOne({
+    user: userId,
+  }).populate("listings");
+  res.json({
+    listings: wishlist ? wishlist.listings : [],
+  });
+};
+
+module.exports = { addToWishlist, removeFromWishlist, getWishlist };

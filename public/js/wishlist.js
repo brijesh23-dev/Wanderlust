@@ -1,5 +1,8 @@
 import wishlistApi from "./services/wishlistService.js";
-import { addToWishlist } from "./services/wishlistService.js";
+import {
+  addToWishlist,
+  removeFromWishlist,
+} from "./services/wishlistService.js";
 /*==================================
         local storage wishlist (guest user)
 =============================*/
@@ -25,11 +28,27 @@ import { addToWishlist } from "./services/wishlistService.js";
 //   });
 // });
 
+// button and currentButton are same but differ in refereces.
 const wishlistButtons = document.querySelectorAll(".wishlist-btn");
 wishlistButtons.forEach((button) => {
   button.addEventListener("click", async (e) => {
-    const listindId = e.currentTarget.dataset.listindId;
-    await addToWishlist(listindId);
+    const currentButton = e.currentTarget;
+    const listindId = currentButton.dataset.listindId;
+    const isActive = currentButton.classList.contains("active");
+    currentButton.disabled = true;
+    try {
+      if (isActive) {
+        await removeFromWishlist(listindId);
+        currentButton.classList.remove("active");
+      } else {
+        await addToWishlist(listindId);
+        currentButton.classList.add("active");
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      currentButton.disabled = false;
+    }
   });
 });
 

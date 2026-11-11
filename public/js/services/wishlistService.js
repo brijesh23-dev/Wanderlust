@@ -33,4 +33,4 @@ async function removeFromWishlist(listindId) {
   return response.json();
 }
 
-export { addToWishlist };
+export { addToWishlist,removeFromWishlist };

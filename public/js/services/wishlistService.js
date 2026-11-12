@@ -17,9 +17,6 @@ async function addToWishlist(listingId) {
     method: "PUT",
   });
 
-  console.log("url:", response.url);
-  console.log("status:", response.status);
-  console.log("content :", response.headers.get("content-type"));
   if (!response.ok) {
     throw new Error("failed to add wishlist");
   }

@@ -3,9 +3,7 @@ const Listing = require("../models/listing");
 const { default: mongoose } = require("mongoose");
 
 const addToWishlist = async (req, res) => {
-  console.log(req.params)
   const { listingId } = req.params;
-  console.log(listingId)
   const userId = req.user._id;
 
   if (!mongoose.isValidObjectId(listingId)) {
@@ -44,14 +42,31 @@ const removeFromWishlist = async (req, res) => {
   });
 };
 
-const getWishlist = async (req, res) => {
-  const userId = req.user._id;
+const fetchUserWishlist = async (userId) => {
   const wishlist = await Wishlist.findOne({
     user: userId,
   }).populate("listings");
+
+  return wishlist ? wishlist.listings : [];
+};
+
+const getWishlist = async (req, res) => {
+  const userId = req.user._id;
+  const listings = await fetchUserWishlist(userId);
   res.json({
-    listings: wishlist ? wishlist.listings : [],
+    success: true,
+    listings,
   });
 };
 
-module.exports = { addToWishlist, removeFromWishlist, getWishlist };
+const renderWishlist = async (req, res) => {
+  const userId = req.user._id;
+  const listings = await fetchUserWishlist(userId);
+  res.render("listings/wishlist", { listings });
+};
+module.exports = {
+  addToWishlist,
+  removeFromWishlist,
+  getWishlist,
+  renderWishlist,
+};

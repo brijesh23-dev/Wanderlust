@@ -35,8 +35,8 @@ router
 
 router.get("/", wrapAsync(listingController.index));
 
-router.get("/wishlist", wrapAsync(listingController.renderWishlist));
-router.post("/wishlist/data",listingController.getWishlist)
+//router.get("/wishlist", wrapAsync(listingController.renderWishlist));
+//router.post("/wishlist/data",listingController.getWishlist)
 
 //new route
 router.get("/new", isLoggedIn, listingController.newFormrender);

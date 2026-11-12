@@ -1,40 +1,85 @@
- 
 <% layout("/layouts/boilerplate") %>
 
 <div class="container mt-4 mb-5">
 
-    <!-- Wishlist heading -->
-    <div class="mb-4">
-        <h2 class="fw-bold">My Wishlist</h2>
-        <p class="text-muted mb-0">Your favourite stays, all in one place.</p>
-        <p id="wishlist-count" class="mt-2">0 saved listings</p>
-    </div>
+  <!-- Wishlist heading -->
+  <div class="mb-4">
+    <h2 class="fw-bold">My Wishlist</h2>
+    <p class="text-muted mb-0">
+      Your favourite stays, all in one place.
+    </p>
+    <p class="mt-2">
+      <%= listings.length %> saved listings
+    </p>
+  </div>
 
-    <!-- Wishlist listings -->
-    <div
-        id="wishlist-container"
-        class="row row-cols-lg-3 row-cols-md-2 row-cols-1 g-4"
-    >
-    </div>
+  <!-- Wishlist listings -->
+  <% if (listings.length > 0) { %>
 
-    <!-- Empty wishlist state -->
-    <div id="empty-wishlist" class="text-center py-5 d-none">
-        <h4 class="fw-semibold">Your wishlist is empty</h4>
-        <p class="text-muted">
-            Start exploring and save the stays you love.
-        </p>
+  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 g-4">
 
-        <a href="/listings" class="btn btn-dark mt-2">
-            Explore Listings
+    <% listings.forEach((listing) => { %>
+
+    <div class="col">
+      <div class="card h-100">
+
+        <a href="/listings/<%= listing._id %>">
+          <img
+            src="<%= listing.image.url.replace('/upload', '/upload/w_600,h_400,c_fill,q_auto:good,f_auto/') %>"
+            class="card-img-top"
+            alt="<%= listing.title %>"
+            width="600"
+            height="400"
+            loading="lazy"
+            decoding="async"
+            style="height: 220px; object-fit: cover;"
+          >
         </a>
+
+        <div class="card-body">
+          <h5 class="card-title">
+            <%= listing.title %>
+          </h5>
+
+          <p class="card-text text-muted">
+            <%= listing.location %>,
+            <%= listing.country %>
+          </p>
+
+          <p class="fw-semibold">
+            &#8377; <%= listing.price.toLocaleString("en-IN") %>
+            / night
+          </p>
+
+          <button type="button" class="wishlist-btn active" data-listing-id="<%= listing._id %>" aria-label="Remove from wishlist">
+            <svg class="wishlist-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z" />
+            </svg>
+          </button>
+        </div>
+
+      </div>
     </div>
 
-    <!-- Loading state -->
-    <div id="wishlist-loading" class="text-center py-5">
-        <div class="spinner-border" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
-        <p class="text-muted mt-2">Loading your wishlist...</p>
-    </div>
+    <% }) %>
+
+  </div>
+
+  <% } else { %>
+
+  <!-- Empty wishlist state -->
+  <div class="text-center py-5">
+    <h4 class="fw-semibold">Your wishlist is empty</h4>
+
+    <p class="text-muted">
+      Start exploring and save the stays you love.
+    </p>
+
+    <a href="/listings" class="btn btn-dark mt-2">
+      Explore Listings
+    </a>
+  </div>
+
+  <% } %>
 
 </div>

@@ -446,6 +446,8 @@ li {
 .wishlist-icon {
     width: 22px;
     height: 22px;
+    fill: none;
+    stroke: currentColor;
     transition: transform 0.2s ease;
 }
 
@@ -459,6 +461,7 @@ li {
 
 .wishlist-btn.active .wishlist-icon {
     fill: #ff385c;
+    stroke: #ff385c;
 }
 
 .wishlist-btn:hover .wishlist-icon {

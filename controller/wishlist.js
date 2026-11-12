@@ -3,21 +3,23 @@ const Listing = require("../models/listing");
 const { default: mongoose } = require("mongoose");
 
 const addToWishlist = async (req, res) => {
-  const { listindId } = req.params;
+  console.log(req.params)
+  const { listingId } = req.params;
+  console.log(listingId)
   const userId = req.user._id;
 
-  if (!mongoose.isValidObjectId(listindId)) {
+  if (!mongoose.isValidObjectId(listingId)) {
     throw new Error(400, "Invalid listing ID");
   }
 
-  const listing = await Listing.findById(listindId);
+  const listing = await Listing.findById(listingId);
   if (!listing) {
-    throw new Error(400, "Listing not foudn");
+    throw new Error(400, "Listing not found");
   }
 
   const wishlist = await Wishlist.findOneAndUpdate(
     { user: userId },
-    { $addToSet: { listings: listindId } },
+    { $addToSet: { listings: listingId } },
     { new: true, upsert: true, runValidators: true },
   );
 
@@ -28,11 +30,11 @@ const addToWishlist = async (req, res) => {
 };
 
 const removeFromWishlist = async (req, res) => {
-  const { listindId } = req.params;
+  const { listingId } = req.params;
   const userId = req.user._id;
   const wishlist = await Wishlist.findOneAndUpdate(
     { user: userId },
-    { $pull: { listings: listindId } },
+    { $pull: { listings: listingId } },
     { new: true },
   );
 

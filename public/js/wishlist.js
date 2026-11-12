@@ -2,6 +2,7 @@ import wishlistApi from "./services/wishlistService.js";
 import {
   addToWishlist,
   removeFromWishlist,
+  getWishlist,
 } from "./services/wishlistService.js";
 /*==================================
         local storage wishlist (guest user)
@@ -28,20 +29,43 @@ import {
 //   });
 // });
 
-// button and currentButton are same but differ in refereces.
 const wishlistButtons = document.querySelectorAll(".wishlist-btn");
+
+async function initializeWishlist() {
+  try {
+    const { listings } = await getWishlist();
+
+    wishlistButtons.forEach((button) => {
+      const listingId = button.dataset.listingId;
+
+      const isActive = listings.some(
+        (listing) => listing._id === listingId
+      );
+
+      button.classList.toggle("active", isActive);
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+initializeWishlist();
+
+// button and currentButton are same but differ in refereces.
+
 wishlistButtons.forEach((button) => {
   button.addEventListener("click", async (e) => {
     const currentButton = e.currentTarget;
-    const listindId = currentButton.dataset.listindId;
+    const listingId = currentButton.dataset.listingId;
     const isActive = currentButton.classList.contains("active");
+    console.log(isActive);
     currentButton.disabled = true;
     try {
       if (isActive) {
-        await removeFromWishlist(listindId);
+        await removeFromWishlist(listingId);
         currentButton.classList.remove("active");
       } else {
-        await addToWishlist(listindId);
+        await addToWishlist(listingId);
         currentButton.classList.add("active");
       }
     } catch (error) {

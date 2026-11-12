@@ -17,6 +17,9 @@ async function addToWishlist(listingId) {
     method: "PUT",
   });
 
+  console.log("url:", response.url);
+  console.log("status:", response.status);
+  console.log("content :", response.headers.get("content-type"));
   if (!response.ok) {
     throw new Error("failed to add wishlist");
   }
@@ -34,9 +37,7 @@ async function removeFromWishlist(listindId) {
 }
 
 async function getWishlist() {
-  const response = await fetch("/wishlist", {
-    method: "GET",
-  });
+  const response = await fetch("/wishlist");
   if (!response.ok) {
     throw new Error("failed to fetch wishlist");
   }

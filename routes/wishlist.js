@@ -15,7 +15,7 @@ router.delete(
   wrapAsync(wishlistController.removeFromWishlist),
 );
 
-router.get("/", isLoggedIn, wrapAsync(wishlistController.getWishlist));
+router.get("/",wrapAsync(wishlistController.getWishlist));
 router.get("/page", isLoggedIn, wrapAsync(wishlistController.renderWishlist));
 
 module.exports = router;

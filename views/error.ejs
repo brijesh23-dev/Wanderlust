@@ -1,6 +1,16 @@
 <% layout('layouts/boilerplate') %>
-<div class="row mt-5">
-  <div class="alert alert-info col-12 col-md-8 offset-md-2" role="alert">
-    <p><%=err.stack%></p>
-  </div>
-</div>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    Toastify({
+      text: "<%= err.message %>",
+      duration: 4000,
+      gravity: "top",
+      position: "right",
+      close: true,
+      style: {
+        background: "#dc2626",
+        borderRadius: "8px"
+      }
+    }).showToast();
+  });
+</script>

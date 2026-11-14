@@ -30,7 +30,6 @@ import {
 // });
 
 const wishlistButtons = document.querySelectorAll(".wishlist-btn");
-
 async function initializeWishlist() {
   try {
     const { listings } = await getWishlist();

@@ -38,7 +38,8 @@
           </div>
           <div class="col-md-6 mb-3">
             <label for="longitude" class="form-label">longitude</label>
-            <input type="number"  name="listing[longitude]" id="longitude" min="-180" max="180" class="form-control" placeholder="165.xx..." required />
+            <input type="number" step="any" name="listing[longitude]" id="longitude" min="-180" max="180" class="form-control" placeholder="165.xx..." required />
+            <div class="invalid-feedback">Please enter longitude</div>
           </div>
         </div>
         <div class="mb-3">

@@ -2,7 +2,7 @@
 
 Wanderlust is a travel-stay listing platform built with Node.js, Express, MongoDB, and server-rendered EJS views. Users can browse places to stay, filter listings by category, sort results, and view detailed listing information.
 
-Authenticated users can create and manage their own listings, upload listing images, and leave reviews. The application was built as a full-stack marketplace-style project to bring listing management, authentication, image storage, and user feedback together in one experience.
+Authenticated users can create and manage their own listings, upload listing images, leave reviews, and save listings to a persistent wishlist. The application was built as a full-stack marketplace-style project to bring listing management, authentication, image storage, and user feedback together in one experience.
 
 ## Features
 
@@ -12,6 +12,9 @@ Authenticated users can create and manage their own listings, upload listing ima
 - Upload listing images through Cloudinary.
 - Sign up, log in, log out, and maintain sessions with Passport and MongoDB-backed session storage.
 - Add and delete star-rated reviews with server-side Joi validation.
+- Add and remove listings from a MongoDB-backed wishlist.
+- Browse listings with text search, category filters, sorting, and pagination.
+- Capture listing coordinates and display them on an interactive Leaflet map.
 - Display flash messages and a custom error page for invalid requests.
 
 ## Tech Stack
@@ -51,8 +54,8 @@ major_project_1/
 ├── CloudConfig.js         # Cloudinary configuration
 ├── Schema.js              # Joi validation schemas
 ├── middleware.js          # Authentication and ownership middleware
-├── controller/            # Listing, review, and user controllers
-├── models/                # Listing, review, and user Mongoose models
+├── controller/            # Listing, review, user, and wishlist controllers
+├── models/                # Listing, review, user, wishlist, and booking models
 ├── routes/                # Express route modules
 ├── views/                 # EJS pages, layouts, and partials
 ├── public/                # CSS and browser-side JavaScript
@@ -136,6 +139,10 @@ Never commit `.env` or real credentials. The repository's `.gitignore` already e
 | DELETE | `/listings/:id` | Delete a listing |
 | POST | `/listings/:id/reviews` | Add a review |
 | DELETE | `/listings/:id/reviews/:reviewId` | Delete a review |
+| PUT | `/wishlist/:listingId` | Add a listing to the current user's wishlist |
+| DELETE | `/wishlist/:listingId` | Remove a listing from the current user's wishlist |
+| GET | `/wishlist` | Return the current user's wishlist as JSON |
+| GET | `/wishlist/page` | Render the current user's wishlist |
 | GET | `/signup` | Render the registration form |
 | POST | `/signup` | Register a user |
 | GET | `/login` | Render the login form |
@@ -212,25 +219,27 @@ Pagination keeps the active `search`, `category`, and `sort` values when moving 
 
 ### Wishlist
 
-Users can add or remove listings using the heart button on listing cards. Wishlist IDs are stored in the browser's `localStorage`, so they remain available in the same browser without requiring a database record.
+Authenticated users can add or remove listings using the heart button on listing cards. Wishlist records are stored in MongoDB and associated with the logged-in user, so saved listings are available across sessions and devices.
 
 The wishlist page is available at:
 
 ```text
-/listings/wishlist
+/wishlist/page
 ```
 
-The page requests the saved listing records from the server through:
+The client-side wishlist actions use:
 
 ```text
-POST /listings/wishlist/data
+PUT    /wishlist/:listingId
+DELETE /wishlist/:listingId
+GET    /wishlist
 ```
 
-The request body must contain a `listingIds` array. An empty array returns an empty wishlist.
+Wishlist mutation endpoints require authentication. The `GET /wishlist` endpoint returns the user's populated saved listings as JSON.
 
 ### Listing Maps and Coordinates
 
-Listings now store geographic coordinates as a GeoJSON `Point`:
+Listings store geographic coordinates as a GeoJSON `Point`:
 
 ```text
 geometry.coordinates = [longitude, latitude]
@@ -241,7 +250,7 @@ The new and edit listing forms can use the browser's current location to populat
 - Latitude must be between `-90` and `90`.
 - Longitude must be between `-180` and `180`.
 
-Leaflet displays the saved location on the listing details page. The Leaflet assets are served through the `/leaflet` path.
+Leaflet displays the saved location on the listing details page. The Leaflet assets are served through the `/leaflet` path, which serves the installed Leaflet distribution.
 
 ### New Listing Query Parameters
 

@@ -231,7 +231,7 @@
                         <small class="text-muted fs-6">/ night</small>
                     </h4>
 
-                    <form id="booking-form">
+                    <form id="booking-form" action="/bookings/<%= listing._id %>" method="POST">
 
                         <input
                             type="hidden"
@@ -340,3 +340,4 @@
     
     <script src="/leaflet/leaflet.js"></script>
     <script src="/js/showMap.js"></script>
+    <script src="/js/booking.js"></script>

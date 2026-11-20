@@ -16,6 +16,7 @@ const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 const path = require("path");
 const wishlistRoute = require("./routes/wishlist.js");
+const bookingRoute = require("./routes/booking.js");
 
 //const Mongo_Url = 'mongodb://127.0.0.1:27017/wanderlust';
 const dbUrl = process.env.ATLASDB_URL;
@@ -84,6 +85,7 @@ app.use("/listings", listingsRoute);
 app.use("/listings/:id/reviews", reviewsRoute);
 app.use("/", userRouter);
 app.use("/wishlist", wishlistRoute);
+app.use("/bookings", bookingRoute);
 
 app.all("*", (req, res, next) => {
   next(new ExpressError(404, "Page Not Found")); //throw error for undefined routes
